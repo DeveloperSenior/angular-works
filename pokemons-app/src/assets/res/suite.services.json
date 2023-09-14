@@ -1,0 +1,9 @@
+{
+    "Pokemon": {
+        "host": "https://pokeapi.co",
+        "context": "/api/v2",
+        "services": {
+            "pokemon": "/pokemon"
+        }
+    }
+}
