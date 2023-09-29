@@ -1,14 +1,14 @@
-<mat-form-field>
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Nombre pokemon" #input>
-</mat-form-field>
-<table mat-table [dataSource]="pokemonList" class="mat-elevation-z8 demo-table">
-    <!-- Name Column -->
-    <ng-container matColumnDef="demo-name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+<div class="container">
+    <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Nombre pokemon" #input>
+    </mat-form-field>
+    <table mat-table [dataSource]="pokemonList" class="mat-elevation-z8 table">
+        <!-- Name Column -->
+        <ng-container matColumnDef="demo-name">
+            <th mat-header-cell *matHeaderCellDef> Nombre pokemon </th>
+            <td mat-cell *matCellDef="let element"> <i (click)="loadInfoPokemon(element.url)"> {{element.name}}</i></td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>

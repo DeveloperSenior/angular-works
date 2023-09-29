@@ -15,6 +15,7 @@ import * as moment from 'moment';
 import { registerLocaleData } from '@angular/common';
 import { fontAwesomeIcons } from './utilities/font-awesome-icons';
 import { PokemonComponent } from './components/pokemon/pokemon.component';
+import { DetailComponent } from './components/pokemon/detail/detail.component';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -23,7 +24,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    PokemonComponent
+    PokemonComponent,
+    DetailComponent
   ],
   imports: [
     BrowserModule,

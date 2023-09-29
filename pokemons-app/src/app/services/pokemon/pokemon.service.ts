@@ -24,4 +24,15 @@ export class PokemonService extends PokemonServiceBase {
     });
   }
 
+  async getDetailPokemon(url: any): Promise<any> {
+    return await new Promise<any>((resolve, reject) => {
+      this.getSuiteServices().then((json) => {
+        this.get(url, true).subscribe({
+          next: (response) => resolve(response),
+          error: (error) => reject(error)
+        })
+      });
+    });
+  }
+
 }
