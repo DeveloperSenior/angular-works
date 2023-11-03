@@ -33,7 +33,8 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('../views/LoginView.vue')
+      component: () => import('../views/LoginView.vue'),
+      beforeEnter: async (to, from)=>{ if (await isAuthenticated()) return false}
     },
     {
       path: '/profile',
@@ -56,6 +57,7 @@ router.beforeEach(async (to, from) => {
   ) {
     return { name: 'login' }
   }
+
 })
 
 export default router
