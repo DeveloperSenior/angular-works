@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-
+//github e0b6f54068247814ceedf26e7b696e460ea2e03e
 const firebaseConfig = {
     apiKey: "AIzaSyAT2oIyguWzU0NoEg_q1L089k-3NT4-v0k",
     authDomain: "musicshared-ae309.firebaseapp.com",
