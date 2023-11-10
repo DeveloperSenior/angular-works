@@ -15,7 +15,7 @@ const router = createRouter({
     {
       path: '/signin',
       name: 'signin',
-      component: () => import('../views/errors/404.vue')
+      component: () => import('../views/shared/auth/SigninView.vue')
     },
     {
       path: '/',
@@ -33,8 +33,15 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('../views/LoginView.vue'),
-      beforeEnter: async (to, from)=>{ if (await isAuthenticated()) return false}
+      component: () => import('../views/shared/auth/LoginView.vue'),
+      beforeEnter: async (to, from, next)=>{ 
+        if (await isAuthenticated())
+        {
+          next('/')
+        }else{
+          next()
+        }
+      }
     },
     {
       path: '/profile',
@@ -55,7 +62,9 @@ router.beforeEach(async (to, from) => {
     !await isAuthenticated() &&
     to.name !== 'login'
   ) {
+    if(to.name !== 'signin'){
     return { name: 'login' }
+    }
   }
 
 })
