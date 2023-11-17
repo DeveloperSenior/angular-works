@@ -15,6 +15,8 @@ import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 
 import { faTwitter, faGooglePlus, faGoogle, faGooglePlusG, faGithub } from '@fortawesome/free-brands-svg-icons'
 
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 /* add icons to the library */
 library.add(faUserSecret, faTwitter, faGooglePlus, faGoogle, faGooglePlusG, faGithub )
@@ -23,5 +25,5 @@ const app = createApp(App)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(createPinia())
 app.use(router)
-
+app.use(VueSweetalert2);
 app.mount('#app')

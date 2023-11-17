@@ -24,10 +24,9 @@ const getImageProfile = ()=>{
 }
 
   const navigation = [
-    { name: 'Dashboard', href: '#', current: true },
-    { name: 'Team', href: '#', current: false },
-    { name: 'Projects', href: '#', current: false },
-    { name: 'Calendar', href: '#', current: false },
+    { name: 'Dashboard', href: '/', current: true },
+    { name: 'Manage Tracks', href: '/create-tracks', current: false },
+    { name: 'My Favorites Tracks', href: '/favorite-tracks', current: false },
   ]
   </script>
 <template>

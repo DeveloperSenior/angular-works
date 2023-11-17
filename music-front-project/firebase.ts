@@ -9,7 +9,8 @@ const firebaseConfig = {
     projectId: "musicshared-ae309",
     storageBucket: "musicshared-ae309.appspot.com",
     messagingSenderId: "957462654029",
-    appId: "1:957462654029:web:01eeb1b5d5db770aafc004"
+    appId: "1:957462654029:web:01eeb1b5d5db770aafc004",
+    databaseURL: "https://musicshared-ae309-default-rtdb.firebaseio.com/",
   };
 
 const app = initializeApp(firebaseConfig);

@@ -1,4 +1,7 @@
 {
+  "types": [
+    "vue-sweetalert2"
+  ],
   "files": [],
   "references": [
     

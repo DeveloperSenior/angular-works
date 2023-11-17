@@ -13,8 +13,15 @@ const schema = yup.object({
 
 
 const signin = async (values: any)=>{
-    alert(JSON.stringify(values, null, 2));
+    userStore.createUser(values.email,values.password)
+}
 
+const loginWithGoogle = async ()=>{
+  userStore.loginWithGoogle()
+}
+
+const loginWithGithub= async ()=>{
+  userStore.loginWithGithub()
 }
 
 </script>
@@ -55,7 +62,22 @@ const signin = async (values: any)=>{
                     </div>
                     <button class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Registrar</button>
                   </Form>
+                  <div>
+                    <p class="mt-10 text-center text-sm text-gray-500">
+                      O registrate con</p>
+                    <div class="m-6 border-t border-gray-500 divide-y divide-gray-100 text-center text-lg text-gray-500">  
+                   </div>
+                   <div class="flex justify-center">
+                    <a  @click="loginWithGoogle()" class="flex w-full m-1 font-semibold justify-center rounded-md bg-gray-800  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    <font-awesome-icon icon="fa-brands fa-google-plus-g" size="xl" /> Google
+                    </a>
+                    <a  @click="loginWithGithub()" class="flex w-full m-1 font-semibold justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                      <font-awesome-icon  icon="fa-brands fa-github" size="xl" /> GitHub
+                    </a>
+                  </div>
+                </div>
             </div>
+            
 
         </div>
     </div>

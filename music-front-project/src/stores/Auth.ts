@@ -79,6 +79,23 @@ const useUserStore = defineStore('userStore', {
                 alert(errorMessage)
               });
         },
+        createUser(email: string,password: string){
+            createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed up 
+                const user = userCredential.user;
+                this.userData = { email: user.email, id: user.uid} as User;
+                this.isLoginUser = true;
+                router.push("/");
+                // ...
+              })
+              .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert(errorMessage)
+                // ..
+              });
+        },
         logOut() {
             signOut(auth).then(() => {
                 // Sign-out successful.

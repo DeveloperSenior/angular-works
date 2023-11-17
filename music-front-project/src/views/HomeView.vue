@@ -1,6 +1,20 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import { dataBaseStore, type Track } from '../stores/Database';
+import { Form, Field, ErrorMessage } from 'vee-validate';
+import {
+    FwbCarousel, FwbA,
+    FwbTable,
+    FwbTableBody,
+    FwbTableCell,
+    FwbTableHead,
+    FwbTableHeadCell,
+    FwbTableRow, FwbButton, FwbPagination, FwbInput
+} from 'flowbite-vue'
+import { onMounted, ref, watchEffect } from 'vue'
+const db = dataBaseStore();
 
+const tableHeader = ref([{ name: 'Image', srOnly: true }, { name: 'Name', srOnly: false }, { name: 'Author', srOnly: false }, { name: 'Gender', srOnly: false }, { name: 'Actions', srOnly: true }]);
+const tracks = ref([] as Track[]);
 
 const links = [
   { name: 'Open roles', href: '#' },
@@ -14,6 +28,24 @@ const stats = [
   { name: 'Hours per week', value: '40' },
   { name: 'Paid time off', value: 'Unlimited' },
 ]
+
+const printData = (data: any) => {
+    const { key } = data;
+    const track = data.val() as Track;
+    track.id = key;
+    tracks.value.push(track);
+
+    console.log(tracks);
+}
+
+const like = (data: Track) => {
+  db.pushTrackLikeUser(data)
+}
+
+onMounted(() => {
+    db.readListMusic({}, printData);
+})
+
 </script>
 
 <template>
@@ -31,9 +63,42 @@ const stats = [
       </div>
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:mx-0">
-          <h2 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">Work with us</h2>
-          <p class="mt-6 text-lg leading-8 text-gray-300">Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.</p>
+          <h2 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">Best music &rarr; one place!</h2>
+          <!-- <p class="mt-6 text-lg leading-8 text-gray-300">Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.</p> -->
         </div>
+        <div v-if="tracks.length > 0" class="flex w-full justify-center mb-5 mt-5">
+          <fwb-table hoverable>
+              <fwb-table-head>
+                  <fwb-table-head-cell v-for="header in tableHeader">
+                      <span v-if="header.srOnly" class="sr-only">{{ header.name }}</span>
+                      <fwb-table-head-cell v-else>{{ header.name }}</fwb-table-head-cell>
+                  </fwb-table-head-cell>
+              </fwb-table-head>
+
+              <fwb-table-body>
+
+                  <fwb-table-row v-for="(track, index) in tracks">
+                      <fwb-table-cell>
+                          <img :src="(track.imgURL as string)" class="w-16 md:w-32 max-w-full max-h-full"
+                              :alt="(track.name as string)">
+                      </fwb-table-cell>
+                      <fwb-table-cell>{{ track.name }}</fwb-table-cell>
+                      <fwb-table-cell>{{ track.author }}</fwb-table-cell>
+                      <fwb-table-cell>{{ track.gender }}</fwb-table-cell>
+                      <fwb-table-cell>
+                          <button @click="like(track)" color="alternative" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
+                            <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-800 rounded-md group-hover:bg-opacity-0">
+                              Like
+                              </span>
+                          </button>
+                      </fwb-table-cell>
+                  </fwb-table-row>
+              </fwb-table-body>
+          </fwb-table>
+
+      </div>
+
+        
         <div class="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
           <div class="grid grid-cols-1 gap-x-8 gap-y-6 text-base font-semibold leading-7 text-white sm:grid-cols-2 md:flex lg:gap-x-10">
             <a v-for="link in links" :key="link.name" :href="link.href">{{ link.name }} <span aria-hidden="true">&rarr;</span></a>
