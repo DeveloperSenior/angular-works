@@ -10,6 +10,8 @@ import {
 } from "firebase/auth";
 import router from '../router/index';
 import {auth} from '../../firebase';
+import Swal from 'sweetalert2'
+
 
 export interface User{
     id?:String,
@@ -40,7 +42,7 @@ const useUserStore = defineStore('userStore', {
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    alert('Error iniciando sesion: ' + errorCode + ' ' + errorMessage);
+                    Swal.fire({ title: 'Error iniciando sesion: ' + errorCode + ' ' + errorMessage + error, icon: 'error' })
                 });
         },
         loginWithGoogle(){
@@ -76,7 +78,8 @@ const useUserStore = defineStore('userStore', {
                 // The AuthCredential type that was used.
                 const credential = GithubAuthProvider.credentialFromError(error);
                 // ...
-                alert(errorMessage)
+                Swal.fire({ title: errorMessage + error, icon: 'error' })
+
               });
         },
         createUser(email: string,password: string){
@@ -92,7 +95,8 @@ const useUserStore = defineStore('userStore', {
               .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                alert(errorMessage)
+                Swal.fire({ title: errorMessage + error, icon: 'error' })
+
                 // ..
               });
         },
@@ -104,7 +108,8 @@ const useUserStore = defineStore('userStore', {
                 router.push("/home");
             }).catch((error: any) => {
                 // An error happened.
-                alert('Error cerrando sesion: ' + error);
+                Swal.fire({ title: 'Error cerrando sesion: ' + error + error, icon: 'error' })
+
             });
         },
         getUserSession() {

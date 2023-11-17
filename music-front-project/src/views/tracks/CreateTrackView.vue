@@ -54,7 +54,7 @@ const printData = (data: any) => {
 
 const createTrack = async (values: any) => {
     const track = values as Track
-    track.id = objectTrack.value.id;
+    if (objectTrack.value.id) track.id = objectTrack.value.id;
     if (track.id != undefined) {
         db.updateTrack(track, () => {
             objectTrack.value = {};
