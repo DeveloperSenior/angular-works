@@ -3,9 +3,11 @@
   import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
   import { useUserStore } from '../../stores/Auth'
   import { minidenticon } from 'minidenticons'
+  import { dataBaseStore } from '../../stores/Database';
 
-const userStore = useUserStore()
 
+const userStore = useUserStore();
+const db = dataBaseStore();
 const isSession = ()=>{
   return userStore.userData?.id !== undefined
 }
@@ -26,8 +28,25 @@ const getImageProfile = ()=>{
   const navigation = [
     { name: 'Dashboard', href: '/', current: true },
     { name: 'Manage Tracks', href: '/create-tracks', current: false },
-    { name: 'My Favorites Tracks', href: '/favorite-tracks', current: false },
+    { name: 'My Favorites Tracks', href: '/favorite-tracks', current: false }
   ]
+
+
+
+const exportExcel = () => {
+  db.exportUsers((data: any)=>{
+    let blob = new Blob([data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }),
+    url = window.URL.createObjectURL(blob)
+    var link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = "Users.xlsx";
+    link.click();
+
+      //window.open(url) // Mostly the same, I was just experimenting with different approaches, tried link.click, iframe and other solutions
+
+  });
+}
+
   </script>
 <template>
     <Disclosure  v-if="isSession()"  as="nav" class="" v-slot="{ open }">
@@ -49,6 +68,7 @@ const getImageProfile = ()=>{
             <div  class="hidden sm:ml-6 sm:block">
               <div class="flex space-x-4">
                 <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'rounded-md px-3 py-2 text-sm font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</a>
+                <a @click="exportExcel" key="Export users"  class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">{{"Export users" }}</a>
               </div>
             </div>
           </div>

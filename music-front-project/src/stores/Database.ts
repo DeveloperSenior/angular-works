@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { useUserStore } from '../stores/Auth'
 import { getDatabase, ref, set, push, get, child, onChildAdded, onChildChanged, onChildRemoved, orderByChild, update, query, equalTo, onValue, startAt } from "firebase/database";
 import Swal from 'sweetalert2'
+import axios from 'axios';
 
 export interface Track {
     id?: String,
@@ -72,6 +73,25 @@ const dataBaseStore = defineStore('dataBaseStore', {
             const result = query(commentsRef, orderByChild('name'))
             onChildAdded(result, (data) => {
                 callback(data)
+            });
+        },
+        exportUsers(callback: any) {
+            const userStore = useUserStore();
+            axios.get('http://localhost:3001/api/v1/exportUsers', {
+                headers: {
+                    'Authorization': `Bearer ${userStore.userData.tokenId}`,
+                },
+                responseType: 'arraybuffer'
+            }).then(async (response) => {
+                const data: any = response.data;
+                callback(data)
+            }).catch((error) => {
+                console.log(error)
+                const errorCode = error.response.status;
+                const errorMessage = error.response.statusText;
+                Swal.fire({ title:errorCode,text:errorMessage, icon: 'error' })
+
+                // ..
             });
         }
     }

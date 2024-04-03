@@ -6,6 +6,8 @@ const userStore = useUserStore()
 
 
 const schema = yup.object({
+  name: yup.string().min(6),
+  nickName: yup.string().min(6),
   email: yup.string().required('El correo electronico es obligatorio').email('No cumple con el formato de correo'),
   password: yup.string().required('La contraseña es obligatoria').min(8),
   confirmPassword: yup.string().oneOf([yup.ref('password'), ''], 'La contraseña es diferente')
@@ -13,7 +15,7 @@ const schema = yup.object({
 
 
 const signin = async (values: any)=>{
-    userStore.createUser(values.email,values.password)
+    userStore.createUser(values.email,values.password, () => userStore.createUserLocal(values))
 }
 
 const loginWithGoogle = async ()=>{
@@ -35,6 +37,20 @@ const loginWithGithub= async ()=>{
 
             <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                 <Form class="space-y-6" @submit="signin" :validation-schema="schema">
+                    <div>
+                        <label for="nickName" class="block text-sm font-medium leading-6 text-900">Nick Name</label>
+                        <div class="mt-2">
+                            <Field name="nickName" type="text" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                            <ErrorMessage class="text-orange-500" name="nickName" />
+                        </div>
+                    </div>
+                    <div>
+                        <label for="name" class="block text-sm font-medium leading-6 text-900">Name</label>
+                        <div class="mt-2">
+                            <Field name="name" type="text" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                            <ErrorMessage class="text-orange-500" name="name" />
+                        </div>
+                    </div>
                     <div>
                         <label for="email" class="block text-sm font-medium leading-6 text-900">Correo electronico</label>
                         <div class="mt-2">
